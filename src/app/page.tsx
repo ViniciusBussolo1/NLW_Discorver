@@ -1,3 +1,9 @@
+import { Login } from '@/components/login/Login'
+
 export default function Home() {
-  return <h1>Heelr</h1>
+  return (
+    <>
+      <Login />
+    </>
+  )
 }
