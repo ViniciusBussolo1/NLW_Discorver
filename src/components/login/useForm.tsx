@@ -19,7 +19,7 @@ export const useFormEnterTheRoom = () => {
   })
 
   const handleSubmitForm = ({ codigo }: FormPropsEnterTheRoom) => {
-    console.log(codigo)
+    return codigo
   }
 
   return {
