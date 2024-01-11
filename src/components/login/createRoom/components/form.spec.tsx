@@ -1,8 +1,8 @@
 import { render, logRoles, screen, waitFor } from '@testing-library/react'
 
-import '@testing-library/jest-dom'
-import userEvent from '@testing-library/user-event'
 import { Form } from './form'
+import userEvent from '@testing-library/user-event'
+import '@testing-library/jest-dom'
 
 const handleSubmitForm = jest.fn()
 
@@ -29,7 +29,7 @@ describe('<Form />', () => {
     })
   })
 
-  it.only('should submit the form correctly', async () => {
+  it('should submit the form correctly', async () => {
     render(<Form handleSubmitForm={handleSubmitForm} />)
 
     const mockPassword = '12345'
@@ -60,5 +60,27 @@ describe('<Form />', () => {
         expect.anything(),
       )
     })
+  })
+
+  it('should change the input type when clicking on the icon', async () => {
+    render(<Form handleSubmitForm={handleSubmitForm} />)
+
+    const inputPassword = screen.getByPlaceholderText(
+      /insira uma senha/i,
+    ) as HTMLInputElement
+
+    const eyeOffIcon = screen.getByTestId('eyeOff-icon')
+
+    expect(inputPassword.type).toBe('password')
+
+    await userEvent.click(eyeOffIcon)
+
+    expect(inputPassword.type).toBe('text')
+
+    const eyeIcon = screen.getByTestId('eye-icon')
+
+    await userEvent.click(eyeIcon)
+
+    expect(inputPassword.type).toBe('password')
   })
 })
