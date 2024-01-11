@@ -1,14 +1,29 @@
+import Link from 'next/link'
 import Image from 'next/image'
-import LogIn from '../../../../public/button_incos/LogIn.svg'
+
+import { Form } from './components/form'
+import { FormPropsCreateRoom } from './components/type'
+
+import ShortUniqueId from 'short-unique-id'
+import supabase from '@/services/supabase'
+
 import Ilustracao from '../../../../public/Ilustração.svg'
 import Logo from '../../../../public/Logo.svg'
 
-import { useFormCreateRoom } from './useForm'
-import Link from 'next/link'
-
 export function CreateRoomPage() {
-  const { errors, register, handleSubmit, handleSubmitForm } =
-    useFormCreateRoom()
+  const handleSubmitForm = async ({ senha }: FormPropsCreateRoom) => {
+    const uid = new ShortUniqueId({ length: 6 })
+    const code = uid.rnd()
+    const codeMaiusculo = code.toUpperCase()
+
+    const { error } = await supabase.from('Room').insert([
+      {
+        admin: true,
+        codigo: codeMaiusculo,
+        senha,
+      },
+    ])
+  }
 
   return (
     <main className="w-screen h-screen flex flex-col">
@@ -30,26 +45,7 @@ export function CreateRoomPage() {
                 Crie sua própria sala
               </h1>
 
-              <form
-                onSubmit={handleSubmit(handleSubmitForm)}
-                className="w-full flex flex-col gap-[1.125rem]"
-              >
-                <input
-                  type="password"
-                  placeholder="Insira uma senha"
-                  className="py-[0.813rem] pl-4 pr-3 rounded-lg border-[0.125rem] border-grey-blue focus:border-linear"
-                  {...register('senha')}
-                />
-                {errors.senha ? (
-                  <span className="text-sm leading-normal text-red">
-                    {errors.senha.message}{' '}
-                  </span>
-                ) : null}
-                <button className="w-full flex justify-center items-center gap-[0.625rem] py-[0.813rem] bg-blue hover:bg-hover-blue rounded-lg font-medium text-white ">
-                  <Image src={LogIn} alt="Icone de login" />
-                  Criar sala
-                </button>
-              </form>
+              <Form handleSubmitForm={handleSubmitForm} />
             </div>
           </div>
         </div>

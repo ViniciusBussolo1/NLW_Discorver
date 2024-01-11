@@ -7,19 +7,16 @@ import LogIn from '../../../public/button_incos/LogIn.svg'
 import Users from '../../../public/button_incos/Users.svg'
 import Link from 'next/link'
 
-import { useState } from 'react'
 import { useFormEnterTheRoom } from './useForm'
 
 export function Login() {
-  const [createRoom, setCreateRoom] = useState(false)
-
   const { errors, register, handleSubmit, handleSubmitForm } =
     useFormEnterTheRoom()
 
   return (
     <main className="w-screen h-screen flex flex-col">
       <header>
-        <Link href="/" onClick={() => setCreateRoom(false)}>
+        <Link href="/">
           <Image src={Logo} alt="Logo do site" className="mt-9 ml-40" />
         </Link>
       </header>
