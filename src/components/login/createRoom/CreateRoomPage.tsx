@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 import { Form } from './components/form'
 import { FormPropsCreateRoom } from './components/type'
@@ -11,6 +12,8 @@ import Ilustracao from '../../../../public/Ilustração.svg'
 import Logo from '../../../../public/Logo.svg'
 
 export function CreateRoomPage() {
+  const router = useRouter()
+
   const handleSubmitForm = async ({ senha }: FormPropsCreateRoom) => {
     const uid = new ShortUniqueId({ length: 6 })
     const code = uid.rnd()
@@ -23,6 +26,7 @@ export function CreateRoomPage() {
         senha,
       },
     ])
+    router.push(`room/${codeMaiusculo}`)
   }
 
   return (

@@ -4,8 +4,9 @@ import Image from 'next/image'
 import Logo from '../../../public/Logo.svg'
 import Ilustracao from '../../../public/Ilustração.svg'
 import LogIn from '../../../public/button_incos/LogIn.svg'
-import Users from '../../../public/button_incos/Users.svg'
 import Link from 'next/link'
+
+import { Users } from 'lucide-react'
 
 import { useFormEnterTheRoom } from './useForm'
 
@@ -66,10 +67,10 @@ export function Login() {
               </h1>
               <button className="w-full  py-[0.813rem] rounded-lg border-[0.125rem] border-blue font-medium text-blue">
                 <Link
-                  href="/CreateRoom"
+                  href="/createRoom"
                   className="flex justify-center items-center gap-[0.625rem]"
                 >
-                  <Image src={Users} alt="Icone de usuarios" />
+                  <Users width={18} height={18} className="text-blue" />
                   Criar sala
                 </Link>
               </button>
