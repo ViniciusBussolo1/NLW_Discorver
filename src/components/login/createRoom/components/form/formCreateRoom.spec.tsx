@@ -1,14 +1,16 @@
 import { render, logRoles, screen, waitFor } from '@testing-library/react'
 
-import { Form } from './form'
+import { FormCreateRoom } from './formCreateRoom'
+
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
+import { Form } from 'react-hook-form'
 
 const handleSubmitForm = jest.fn()
 
-describe('<Form />', () => {
+describe('<FormCreateRoom />', () => {
   it('should render default correctly', () => {
-    render(<Form handleSubmitForm={handleSubmitForm} />)
+    render(<FormCreateRoom handleSubmitForm={handleSubmitForm} />)
 
     const inputPassword = screen.getByPlaceholderText(/insira uma senha/i)
 
@@ -16,7 +18,7 @@ describe('<Form />', () => {
   })
 
   it('should show message error when fields was empty', async () => {
-    render(<Form handleSubmitForm={handleSubmitForm} />)
+    render(<FormCreateRoom handleSubmitForm={handleSubmitForm} />)
 
     const buttonSubmit = screen.getByRole('button', {
       name: /icone de login criar sala/i,
@@ -30,7 +32,7 @@ describe('<Form />', () => {
   })
 
   it('should submit the form correctly', async () => {
-    render(<Form handleSubmitForm={handleSubmitForm} />)
+    render(<FormCreateRoom handleSubmitForm={handleSubmitForm} />)
 
     const mockPassword = '12345'
 
@@ -63,7 +65,7 @@ describe('<Form />', () => {
   })
 
   it('should change the input type when clicking on the icon', async () => {
-    render(<Form handleSubmitForm={handleSubmitForm} />)
+    render(<FormCreateRoom handleSubmitForm={handleSubmitForm} />)
 
     const inputPassword = screen.getByPlaceholderText(
       /insira uma senha/i,

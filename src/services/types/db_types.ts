@@ -27,6 +27,27 @@ export interface Database {
         }
         Relationships: []
       }
+      QuestionsRoom: {
+        Row: {
+          codigo: string | null
+          created_at: string
+          id: string
+          question: string | null
+        }
+        Insert: {
+          codigo?: string | null
+          created_at?: string
+          id?: string
+          question?: string | null
+        }
+        Update: {
+          codigo?: string | null
+          created_at?: string
+          id?: string
+          question?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

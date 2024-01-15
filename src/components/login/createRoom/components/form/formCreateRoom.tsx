@@ -6,14 +6,14 @@ import { FormPropsCreateRoom } from './type'
 import { Eye, EyeOff } from 'lucide-react'
 
 import Image from 'next/image'
-import LogIn from '../../../../../public/button_incos/LogIn.svg'
+import LogIn from '../../../../../../public/button_incos/LogIn.svg'
 import { useState } from 'react'
 
 type FormProps = {
   handleSubmitForm: (data: FormPropsCreateRoom) => void
 }
 
-export function Form({ handleSubmitForm }: FormProps) {
+export function FormCreateRoom({ handleSubmitForm }: FormProps) {
   const [passwordVisiblity, setPasswordVisiblity] = useState(false)
 
   const { errors, register, handleSubmit } = useFormCreateRoom()

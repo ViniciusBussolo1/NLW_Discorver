@@ -1,17 +1,39 @@
+'use client'
+
 import Image from 'next/image'
 import Logo from '../../../public/Logo.svg'
 import Copy from '../../../public/button_incos/Copy.svg'
-import Lock from '../../../public/Lock.svg'
 import DialogPops from '../../../public/DialogPops.svg'
 
 import { Users } from 'lucide-react'
 
-export function RoomPage() {
+import { FormPropsQuestion } from './components/form/type'
+import { FormQuestions } from './components/form/formQuestion'
+
+import supabase from '@/services/supabase'
+import Link from 'next/link'
+
+type RoomPageProps = {
+  code: string
+}
+
+export function RoomPage({ code }: RoomPageProps) {
+  const handleSubmitForm = async ({ pergunta }: FormPropsQuestion) => {
+    const { data } = await supabase.from('QuestionsRoom').insert([
+      {
+        question: pergunta,
+        codigo: code,
+      },
+    ])
+  }
+
   return (
     <div className="w-full h-full flex justify-center items-center pt-8">
       <div className="max-w-[70rem] w-full">
         <header className="w-full flex justify-between items-center">
-          <Image src={Logo} alt="Logo do Site" />
+          <Link href="/">
+            <Image src={Logo} alt="Logo do Site" />
+          </Link>
 
           <div className="flex items-center gap-2">
             <button className="max-w-[8.375rem] w-full flex items-center gap-[0.625rem] py-[0.688rem] px-4 rounded-lg border-[0.125rem] border-blue font-medium text-blue">
@@ -30,21 +52,7 @@ export function RoomPage() {
             Faça sua pergunta
           </h1>
           <div className="flex flex-col px-4 py-3 border-[0.125rem] border-grey-blue rounded-tr-lg rounded-br-lg rounded-bl-lg">
-            <textarea
-              placeholder="O que você quer perguntar?"
-              className="w-full outline-none resize-none"
-            ></textarea>
-            <div className="w-full flex justify-between items-center mt-10">
-              <div className="flex items-center gap-[0.375rem]">
-                <Image src={Lock} alt="Icone de Cadeado" />
-                <span className="text-sm leainding-[1.375rem] text-icons">
-                  Esta pergunta é anônima
-                </span>
-              </div>
-              <button className="max-w-[6.125rem] w-full rounded-lg bg-blue hover:bg-hover-blue text-white py-2">
-                Enviar
-              </button>
-            </div>
+            <FormQuestions handleSubmitForm={handleSubmitForm} />
           </div>
         </div>
 

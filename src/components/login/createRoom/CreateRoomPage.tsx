@@ -2,14 +2,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
-import { Form } from './components/form'
-import { FormPropsCreateRoom } from './components/type'
-
 import ShortUniqueId from 'short-unique-id'
 import supabase from '@/services/supabase'
 
 import Ilustracao from '../../../../public/Ilustração.svg'
 import Logo from '../../../../public/Logo.svg'
+
+import { FormPropsCreateRoom } from './components/form/type'
+import { FormCreateRoom } from './components/form/formCreateRoom'
 
 export function CreateRoomPage() {
   const router = useRouter()
@@ -49,7 +49,7 @@ export function CreateRoomPage() {
                 Crie sua própria sala
               </h1>
 
-              <Form handleSubmitForm={handleSubmitForm} />
+              <FormCreateRoom handleSubmitForm={handleSubmitForm} />
             </div>
           </div>
         </div>
