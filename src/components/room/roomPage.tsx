@@ -5,26 +5,63 @@ import Logo from '../../../public/Logo.svg'
 import Copy from '../../../public/button_incos/Copy.svg'
 import DialogPops from '../../../public/DialogPops.svg'
 
-import { Users } from 'lucide-react'
+import { Users, User, Check, Trash } from 'lucide-react'
 
 import { FormPropsQuestion } from './components/form/type'
 import { FormQuestions } from './components/form/formQuestion'
 
+import { useQuery } from '@tanstack/react-query'
+
+import * as AlertDialog from '@radix-ui/react-alert-dialog'
+
 import supabase from '@/services/supabase'
 import Link from 'next/link'
+import { AlertDialogComponent } from './components/alertDialog/alertDialog'
 
 type RoomPageProps = {
   code: string
 }
 
 export function RoomPage({ code }: RoomPageProps) {
+  const getQuestions = async () => {
+    const { data } = await supabase
+      .from('QuestionsRoom')
+      .select()
+      .eq('codigo', code)
+
+    return data
+  }
+
+  const { data, refetch } = useQuery({
+    queryKey: ['questions'],
+    queryFn: getQuestions,
+  })
+
   const handleSubmitForm = async ({ pergunta }: FormPropsQuestion) => {
     const { data } = await supabase.from('QuestionsRoom').insert([
       {
         question: pergunta,
         codigo: code,
+        lida: false,
       },
     ])
+
+    refetch()
+  }
+
+  const handleMarkAsRead = async (id: string) => {
+    const { data } = await supabase
+      .from('QuestionsRoom')
+      .update({ lida: true })
+      .eq('id', id)
+
+    refetch()
+  }
+
+  const handleDeleteQuestion = async (id: string) => {
+    const { data } = await supabase.from('QuestionsRoom').delete().eq('id', id)
+
+    refetch()
   }
 
   return (
@@ -57,16 +94,102 @@ export function RoomPage({ code }: RoomPageProps) {
         </div>
 
         <div className="w-full flex justify-center items-start mt-14">
-          <div className="max-w-[17.313rem] w-full flex flex-col justify-center items-center gap-3">
-            <Image src={DialogPops} alt="Imagem de um dialogo" />
-            <h3 className="text-lg font-semibold text-black leading-normal">
-              Nenhuma pergunta por aqui...
-            </h3>
-            <span className="w-full text-sm leaidng-normal text-grey-grey text-center">
-              Faça sua primeira pergunta e envie o código dessa sala para outras
-              pessoas!
-            </span>
-          </div>
+          {data?.length === 0 ? (
+            <div className="max-w-[17.313rem] w-full flex flex-col justify-center items-center gap-3">
+              <Image src={DialogPops} alt="Imagem de um dialogo" />
+              <h3 className="text-lg font-semibold text-black leading-normal">
+                Nenhuma pergunta por aqui...
+              </h3>
+              <span className="w-full text-sm leaidng-normal text-grey-grey text-center">
+                Faça sua primeira pergunta e envie o código dessa sala para
+                outras pessoas!
+              </span>
+            </div>
+          ) : (
+            <div className="w-full flex flex-col gap-2">
+              {data?.map((item) => {
+                return (
+                  <>
+                    {item.lida === false ? (
+                      <div
+                        key={item.id}
+                        className="w-full bg-lightBlue py-6 pl-6 pr-8 flex flex-col gap-3 rounded-md"
+                      >
+                        <div className="w-full flex justify-start items-center gap-4">
+                          <div className="w-[3.25rem] h-[3.25rem] bg-blue rounded-full flex justify-center items-center text-white">
+                            <User height={26} width={26} />
+                          </div>
+                          <span className="text-base leading-normal text-black">
+                            {item.question}
+                          </span>
+                        </div>
+                        <div className="w-full flex justify-end items-center">
+                          <div className="flex items-center gap-6">
+                            <div
+                              className="flex items-center gap-2 cursor-pointer"
+                              onClick={() => handleMarkAsRead(item.id)}
+                            >
+                              <Check
+                                height={24}
+                                width={24}
+                                className="text-blue"
+                              />
+                              <span className="text-base leading-normal text-grey-grey">
+                                Marcar como lida
+                              </span>
+                            </div>
+                            <AlertDialog.Root>
+                              <AlertDialog.Trigger asChild>
+                                <div className="flex items-center gap-2 cursor-pointer">
+                                  <Trash
+                                    height={24}
+                                    width={24}
+                                    className="text-red"
+                                  />
+                                  <span className="text-base leading-normal text-grey-grey">
+                                    Excluir
+                                  </span>
+                                </div>
+                              </AlertDialog.Trigger>
+                              <AlertDialogComponent />
+                            </AlertDialog.Root>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div
+                        key={item.id}
+                        className="w-full bg-grey-grey/10 py-6 pl-6 pr-8 flex flex-col gap-3 rounded-md"
+                      >
+                        <div className="w-full flex justify-start items-center gap-4">
+                          <div className="w-[3.25rem] h-[3.25rem] bg-grey-blue rounded-full flex justify-center items-center text-white">
+                            <User height={26} width={26} />
+                          </div>
+                          <span className="text-base leading-normal text-black">
+                            {item.question}
+                          </span>
+                        </div>
+                        <div className="w-full flex justify-end items-center">
+                          <div className="flex items-center gap-6">
+                            <div className="flex items-center gap-2 cursor-pointer">
+                              <Check
+                                height={24}
+                                width={24}
+                                className="text-blue"
+                              />
+                              <span className="text-base leading-normal text-grey-grey">
+                                Pergunta lida
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )
+              })}
+            </div>
+          )}
         </div>
       </div>
     </div>

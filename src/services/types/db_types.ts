@@ -33,18 +33,21 @@ export interface Database {
           created_at: string
           id: string
           question: string | null
+          lida: boolean | null
         }
         Insert: {
           codigo?: string | null
           created_at?: string
           id?: string
           question?: string | null
+          lida: boolean | null
         }
         Update: {
           codigo?: string | null
           created_at?: string
           id?: string
           question?: string | null
+          lida: boolean | null
         }
         Relationships: []
       }

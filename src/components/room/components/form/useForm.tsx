@@ -9,6 +9,7 @@ export const useFormQuestion = () => {
   const {
     handleSubmit,
     register,
+
     formState: { errors },
   } = useForm<FormPropsQuestion>({
     mode: 'onChange',

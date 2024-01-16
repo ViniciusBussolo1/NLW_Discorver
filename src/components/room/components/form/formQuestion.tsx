@@ -25,6 +25,7 @@ export function FormQuestions({ handleSubmitForm }: FormProps) {
           {errors.pergunta.message}{' '}
         </span>
       ) : null}
+
       <div className="w-full flex justify-between items-center mt-10">
         <div className="flex items-center gap-[0.375rem]">
           <Image src={Lock} alt="Icone de Cadeado" />
