@@ -33,7 +33,10 @@ export function FormQuestions({ handleSubmitForm }: FormProps) {
             Esta pergunta é anônima
           </span>
         </div>
-        <button className="max-w-[6.125rem] w-full rounded-lg bg-blue hover:bg-hover-blue text-white py-2">
+        <button
+          type="submit"
+          className="max-w-[6.125rem] w-full rounded-lg bg-blue hover:bg-hover-blue text-white py-2"
+        >
           Enviar
         </button>
       </div>

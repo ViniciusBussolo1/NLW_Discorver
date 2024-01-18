@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+
 import Image from 'next/image'
 import Logo from '../../../public/Logo.svg'
 import Copy from '../../../public/button_incos/Copy.svg'
@@ -12,17 +14,17 @@ import { FormQuestions } from './components/form/formQuestion'
 
 import { useQuery } from '@tanstack/react-query'
 
-import * as AlertDialog from '@radix-ui/react-alert-dialog'
-
 import supabase from '@/services/supabase'
 import Link from 'next/link'
-import { AlertDialogComponent } from './components/alertDialog/alertDialog'
+import { Dialog } from './components/dialog/dialog'
 
 type RoomPageProps = {
   code: string
 }
 
 export function RoomPage({ code }: RoomPageProps) {
+  const [isOpen, setIsOpen] = useState(false)
+
   const getQuestions = async () => {
     const { data } = await supabase
       .from('QuestionsRoom')
@@ -58,12 +60,6 @@ export function RoomPage({ code }: RoomPageProps) {
     refetch()
   }
 
-  const handleDeleteQuestion = async (id: string) => {
-    const { data } = await supabase.from('QuestionsRoom').delete().eq('id', id)
-
-    refetch()
-  }
-
   return (
     <div className="w-full h-full flex justify-center items-center pt-8">
       <div className="max-w-[70rem] w-full">
@@ -74,7 +70,7 @@ export function RoomPage({ code }: RoomPageProps) {
 
           <div className="flex items-center gap-2">
             <button className="max-w-[8.375rem] w-full flex items-center gap-[0.625rem] py-[0.688rem] px-4 rounded-lg border-[0.125rem] border-blue font-medium text-blue">
-              #323232
+              #{code}
               <Image src={Copy} alt="Icone do copiar" />
             </button>
             <button className="max-w-[10.813rem] w-full flex items-center gap-[0.625rem] py-[0.813rem] px-7 rounded-lg bg-blue hover:bg-hover-blue font-medium text-white">
@@ -138,21 +134,27 @@ export function RoomPage({ code }: RoomPageProps) {
                                 Marcar como lida
                               </span>
                             </div>
-                            <AlertDialog.Root>
-                              <AlertDialog.Trigger asChild>
-                                <div className="flex items-center gap-2 cursor-pointer">
-                                  <Trash
-                                    height={24}
-                                    width={24}
-                                    className="text-red"
-                                  />
-                                  <span className="text-base leading-normal text-grey-grey">
-                                    Excluir
-                                  </span>
-                                </div>
-                              </AlertDialog.Trigger>
-                              <AlertDialogComponent />
-                            </AlertDialog.Root>
+
+                            <div
+                              onClick={() => setIsOpen(true)}
+                              className="flex items-center gap-2 cursor-pointer"
+                            >
+                              <Trash
+                                height={24}
+                                width={24}
+                                className="text-red"
+                              />
+                              <span className="text-base leading-normal text-grey-grey">
+                                Excluir
+                              </span>
+                            </div>
+                            <Dialog
+                              isOpen={isOpen}
+                              setIsOpen={setIsOpen}
+                              codigo={item.codigo}
+                              id={item.id}
+                              refetch={refetch}
+                            />
                           </div>
                         </div>
                       </div>
