@@ -67,7 +67,9 @@ export function Dialog({
             />
           </div>
         </div>
-      ) : null}
+      ) : (
+        <div></div>
+      )}
     </>
   )
 }

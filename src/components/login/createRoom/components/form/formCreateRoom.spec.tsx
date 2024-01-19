@@ -4,7 +4,6 @@ import { FormCreateRoom } from './formCreateRoom'
 
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
-import { Form } from 'react-hook-form'
 
 const handleSubmitForm = jest.fn()
 
@@ -17,7 +16,7 @@ describe('<FormCreateRoom />', () => {
     expect(inputPassword).toBeVisible()
   })
 
-  it('should show message error when fields was empty', async () => {
+  it('should show error message when fields are empty', async () => {
     render(<FormCreateRoom handleSubmitForm={handleSubmitForm} />)
 
     const buttonSubmit = screen.getByRole('button', {
@@ -27,7 +26,7 @@ describe('<FormCreateRoom />', () => {
     await userEvent.click(buttonSubmit)
 
     await waitFor(() => {
-      expect(screen.getByText('Informe a senha da sala')).toBeVisible()
+      expect(screen.getByText(/informe a senha da sala/i)).toBeVisible()
     })
   })
 
@@ -47,7 +46,7 @@ describe('<FormCreateRoom />', () => {
 
     await waitFor(() => {
       expect(
-        screen.queryByText('Informe a senha da sala'),
+        screen.queryByText(/informe a senha da sala/i),
       ).not.toBeInTheDocument()
     })
 
