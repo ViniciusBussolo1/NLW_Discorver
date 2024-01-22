@@ -49,7 +49,7 @@ export function Dialog({
 
   return (
     <>
-      {isOpen === true ? (
+      {isOpen && (
         <div className="bg-overlay/80 fixed inset-0">
           <div className="fixed top-[50%] left-[50%] max-w-[36.875rem] w-full translate-x-[-50%] translate-y-[-50%] rounded-[0.375rem] bg-white py-16 focus:outline-none flex flex-col justify-center items-center">
             <h1 className="text-black text-2xl leading-[2.125rem] font-bold">
@@ -67,8 +67,6 @@ export function Dialog({
             />
           </div>
         </div>
-      ) : (
-        <div></div>
       )}
     </>
   )
