@@ -1,18 +1,19 @@
 'use client'
 
+import Link from 'next/link'
+
 import Image from 'next/image'
 import Logo from '../../../public/Logo.svg'
 import Ilustracao from '../../../public/Ilustração.svg'
-import LogIn from '../../../public/button_incos/LogIn.svg'
-import Link from 'next/link'
+
+import { FormLogin } from './components/form/formLogin'
 
 import { Users } from 'lucide-react'
 
-import { useFormEnterTheRoom } from './useForm'
-
 export function Login() {
-  const { errors, register, handleSubmit, handleSubmitForm } =
-    useFormEnterTheRoom()
+  const handleSubmitForm = () => {
+    console.log('Login')
+  }
 
   return (
     <main className="w-screen h-screen flex flex-col">
@@ -32,27 +33,7 @@ export function Login() {
               <h1 className="text-[1.75rem] leading-normal font-bold text-black">
                 Entre como participante
               </h1>
-
-              <form
-                onSubmit={handleSubmit(handleSubmitForm)}
-                className="w-full flex flex-col gap-[1.125rem]"
-              >
-                <input
-                  type="text"
-                  placeholder="Código da sala"
-                  className="py-[0.813rem] pl-4 pr-3 rounded-lg border-[0.125rem] border-grey-blue focus:border-linear"
-                  {...register('codigo')}
-                />
-                {errors.codigo ? (
-                  <span className="text-sm leading-normal text-red">
-                    {errors.codigo.message}{' '}
-                  </span>
-                ) : null}
-                <button className="w-full flex justify-center items-center gap-[0.625rem] py-[0.813rem] bg-blue hover:bg-hover-blue rounded-lg font-medium text-white ">
-                  <Image src={LogIn} alt="Icone de login" />
-                  Entrar na sala
-                </button>
-              </form>
+              <FormLogin handleSubmitForm={handleSubmitForm} />
             </div>
 
             <div className="w-full flex justify-between items-center">

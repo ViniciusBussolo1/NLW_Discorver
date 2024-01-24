@@ -2,14 +2,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
-import ShortUniqueId from 'short-unique-id'
-import supabase from '@/services/supabase'
-
-import Ilustracao from '../../../../public/Ilustração.svg'
-import Logo from '../../../../public/Logo.svg'
+import Ilustracao from '../../../public/Ilustração.svg'
+import Logo from '../../../public/Logo.svg'
 
 import { FormPropsCreateRoom } from './components/form/type'
 import { FormCreateRoom } from './components/form/formCreateRoom'
+
+import ShortUniqueId from 'short-unique-id'
+import supabase from '@/services/supabase'
 
 export function CreateRoomPage() {
   const router = useRouter()

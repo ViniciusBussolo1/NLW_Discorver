@@ -112,7 +112,10 @@ export function RoomPage({ code }: RoomPageProps) {
               </span>
             </div>
           ) : (
-            <div className="w-full flex flex-col gap-2">
+            <div
+              data-testid="question-list"
+              className="w-full flex flex-col gap-2"
+            >
               {data
                 ?.slice()
                 .sort((a, b) => {
