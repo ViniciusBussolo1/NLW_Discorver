@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useFormEnterTheRoom } from './useForm'
+import { useFormLogin } from './useForm'
 
 import LogIn from '../../../../../public/button_incos/LogIn.svg'
 
@@ -8,7 +8,7 @@ type FormLoginProps = {
 }
 
 export function FormLogin({ handleSubmitForm }: FormLoginProps) {
-  const { errors, register, handleSubmit } = useFormEnterTheRoom()
+  const { errors, register, handleSubmit } = useFormLogin()
 
   return (
     <form

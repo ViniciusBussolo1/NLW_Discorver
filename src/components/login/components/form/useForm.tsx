@@ -1,24 +1,24 @@
 'use client'
 
 import { useForm } from 'react-hook-form'
-import { FormPropsEnterTheRoom } from './type'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { schemaFormEnterTheRoom } from './schema'
+import { FormPropsLogin } from './type'
+import { schemaFormLogin } from './schema'
 
-export const useFormEnterTheRoom = () => {
+export const useFormLogin = () => {
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<FormPropsEnterTheRoom>({
+  } = useForm<FormPropsLogin>({
     mode: 'onChange',
-    resolver: zodResolver(schemaFormEnterTheRoom),
+    resolver: zodResolver(schemaFormLogin),
     defaultValues: {
       codigo: '',
     },
   })
 
-  const handleSubmitForm = ({ codigo }: FormPropsEnterTheRoom) => {
+  const handleSubmitForm = ({ codigo }: FormPropsLogin) => {
     return codigo
   }
 

@@ -1,4 +1,4 @@
 import { z } from 'zod'
-import { schemaFormEnterTheRoom } from './schema'
+import { schemaFormLogin } from './schema'
 
-export type FormPropsEnterTheRoom = z.infer<typeof schemaFormEnterTheRoom>
+export type FormPropsLogin = z.infer<typeof schemaFormLogin>
