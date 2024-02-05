@@ -1,18 +1,40 @@
 'use client'
 
-import Link from 'next/link'
+import { useState } from 'react'
 
+import Link from 'next/link'
 import Image from 'next/image'
+
+import { useRouter } from 'next/navigation'
+
 import Logo from '../../../public/Logo.svg'
 import Ilustracao from '../../../public/Ilustração.svg'
 
 import { FormLogin } from './components/form/formLogin'
+import { FormPropsLogin } from './components/form/type'
 
 import { Users } from 'lucide-react'
 
+import supabase from '@/services/supabase'
+
 export function Login() {
-  const handleSubmitForm = () => {
-    console.log('Login')
+  const [errorMessage, setErrorMessage] = useState('')
+
+  const router = useRouter()
+
+  const handleSubmitForm = async ({ codigo }: FormPropsLogin) => {
+    const { data, error } = await supabase
+      .from('Room')
+      .select()
+      .eq('codigo', codigo)
+
+    const codigoRoom = data?.some((item) => item.codigo === codigo)
+
+    if (codigoRoom) {
+      router.push(`room/${codigo}`)
+    } else {
+      setErrorMessage('Código invalido')
+    }
   }
 
   return (
@@ -33,7 +55,10 @@ export function Login() {
               <h1 className="text-[1.75rem] leading-normal font-bold text-black">
                 Entre como participante
               </h1>
-              <FormLogin handleSubmitForm={handleSubmitForm} />
+              <FormLogin
+                handleSubmitForm={handleSubmitForm}
+                errorMessage={errorMessage}
+              />
             </div>
 
             <div className="w-full flex justify-between items-center">

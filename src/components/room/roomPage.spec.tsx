@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals'
 import { render, screen, waitFor } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
@@ -42,13 +41,5 @@ describe('<RoomPage />', () => {
     )
 
     expect(NoQuestionsMessage).toBeVisible()
-  })
-
-  it('should render the list de questions', async () => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <RoomPage code="UE7HTS" />
-      </QueryClientProvider>,
-    )
   })
 })

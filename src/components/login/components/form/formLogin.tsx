@@ -2,12 +2,14 @@ import Image from 'next/image'
 import { useFormLogin } from './useForm'
 
 import LogIn from '../../../../../public/button_incos/LogIn.svg'
+import { FormPropsLogin } from './type'
 
 type FormLoginProps = {
-  handleSubmitForm: () => void
+  handleSubmitForm: (data: FormPropsLogin) => void
+  errorMessage: string
 }
 
-export function FormLogin({ handleSubmitForm }: FormLoginProps) {
+export function FormLogin({ handleSubmitForm, errorMessage }: FormLoginProps) {
   const { errors, register, handleSubmit } = useFormLogin()
 
   return (
@@ -26,6 +28,11 @@ export function FormLogin({ handleSubmitForm }: FormLoginProps) {
           {errors.codigo.message}{' '}
         </span>
       ) : null}
+
+      {errorMessage ? (
+        <span className="text-sm leading-normal text-red">{errorMessage} </span>
+      ) : null}
+
       <button className="w-full flex justify-center items-center gap-[0.625rem] py-[0.813rem] bg-blue hover:bg-hover-blue rounded-lg font-medium text-white ">
         <Image src={LogIn} alt="Icone de login" />
         Entrar na sala

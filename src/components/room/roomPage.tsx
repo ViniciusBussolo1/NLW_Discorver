@@ -27,6 +27,8 @@ type RoomPageProps = {
 
 export function RoomPage({ code }: RoomPageProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [admin, setAdmin] = useState(false)
+
   const [copiedCode, copy] = useCopyToClipboard()
 
   const getQuestions = async () => {
@@ -34,6 +36,15 @@ export function RoomPage({ code }: RoomPageProps) {
       .from('QuestionsRoom')
       .select()
       .eq('codigo', code)
+
+    const { data: Room, error } = await supabase
+      .from('Room')
+      .select()
+      .eq('codigo', code)
+
+    const adminRoom = Room?.some((item) => item.admin === true)
+
+    adminRoom && setAdmin(true)
 
     return data
   }
@@ -74,8 +85,8 @@ export function RoomPage({ code }: RoomPageProps) {
 
           <div className="flex items-center gap-2">
             <button
-              onClick={() => copy(`#${code}`)}
-              className="max-w-[8.375rem] w-full flex items-center gap-[0.625rem] py-[0.688rem] px-4 rounded-lg border-[0.125rem] border-blue font-medium text-blue"
+              onClick={() => copy(`${code}`)}
+              className="max-w-[8.375rem] w-full flex justify-center items-center gap-[0.625rem] py-[0.688rem] px-4 rounded-lg border-[0.125rem] border-blue font-medium text-blue"
             >
               #{code}
               <Image src={Copy} alt="Icone do copiar" />
