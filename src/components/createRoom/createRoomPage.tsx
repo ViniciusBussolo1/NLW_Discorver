@@ -19,9 +19,14 @@ export function CreateRoomPage() {
     const code = uid.rnd()
     const codeMaiusculo = code.toUpperCase()
 
+    const adminUid = new ShortUniqueId({ length: 9 })
+    const adminCode = adminUid.rnd()
+
+    localStorage.setItem('admin', adminCode)
+
     const { error } = await supabase.from('Room').insert([
       {
-        admin: true,
+        admin: adminCode,
         codigo: codeMaiusculo,
         senha,
       },

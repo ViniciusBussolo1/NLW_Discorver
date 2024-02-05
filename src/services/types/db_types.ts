@@ -5,21 +5,21 @@ export interface Database {
     Tables: {
       Room: {
         Row: {
-          admin: boolean | null
+          admin: string | null
           codigo: string | null
           created_at: string
           id: string
           senha: string | null
         }
         Insert: {
-          admin?: boolean | null
+          admin?: string | null
           codigo?: string | null
           created_at?: string
           id?: string
           senha?: string | null
         }
         Update: {
-          admin?: boolean | null
+          admin?: string | null
           codigo?: string | null
           created_at?: string
           id?: string
